@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class User {
+public class PAMUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,5 +18,5 @@ public class User {
 
     private String username;
     private String password;
-    private boolean isTeacher;
+    private String isTeacher;
 }

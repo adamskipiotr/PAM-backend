@@ -11,11 +11,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void addNewUser(User user){
+    public void addNewUser(PAMUser user){
         userRepository.save(user);
     }
 
-    public void findUser(User user) {
+    public void findUser(PAMUser user) {
         userRepository.findUser(user.getUsername(),user.getPassword());
     }
 }
