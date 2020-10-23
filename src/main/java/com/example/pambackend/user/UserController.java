@@ -23,4 +23,9 @@ public class UserController {
     public void loginUser(PAMUser user){
         userService.findUser(user);
     }
+
+    @GetMapping("/getAll")
+    public void getAllUsers(){
+        userService.getAllUsers();
+    }
 }

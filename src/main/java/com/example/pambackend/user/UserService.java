@@ -18,4 +18,8 @@ public class UserService {
     public void findUser(PAMUser user) {
         userRepository.findUser(user.getUsername(),user.getPassword());
     }
+
+    public void getAllUsers() {
+        userRepository.findAll();
+    }
 }
