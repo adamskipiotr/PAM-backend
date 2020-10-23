@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -19,7 +21,7 @@ public class UserService {
         userRepository.findUser(user.getUsername(),user.getPassword());
     }
 
-    public void getAllUsers() {
-        userRepository.findAll();
+    public List<PAMUser> getAllUsers() {
+         return userRepository.findAll();
     }
 }
