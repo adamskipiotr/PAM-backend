@@ -14,12 +14,12 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/add")
-    public void addNewUser(PAMUser user){
+    public void addNewUser(@RequestBody PAMUser user){
         userService.addNewUser(user);
     }
 
     @PostMapping("/login")
-    public void loginUser(PAMUser user){
+    public void loginUser(@RequestBody PAMUser user){
         userService.findUser(user);
     }
 
