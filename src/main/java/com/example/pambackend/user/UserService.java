@@ -2,7 +2,6 @@ package com.example.pambackend.user;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
