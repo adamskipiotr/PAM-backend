@@ -17,7 +17,7 @@ public class GroupService {
         List<StudentsGroup> studentsGroups = groupRepository.findAll();
         List<StudentsGroupDTO> returnList = new LinkedList<>();
         for(StudentsGroup studentsGroup: studentsGroups){
-            returnList.add(new StudentsGroupDTO(studentsGroup.getGroupName()));
+            returnList.add(new StudentsGroupDTO(studentsGroup.getGroupID(),studentsGroup.getGroupName()));
         }
         return returnList;
     }

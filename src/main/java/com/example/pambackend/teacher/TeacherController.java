@@ -1,7 +1,6 @@
 package com.example.pambackend.teacher;
 
 
-import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +20,8 @@ public class TeacherController {
     }
 
     @PostMapping("/login")
-    public void loginUser(@RequestBody Teacher user){
-        teacherService.findUser(user);
+    public boolean loginTeacher(@RequestBody Teacher user){
+       return teacherService.findTeacher(user);
     }
 
     @GetMapping("/getAll")

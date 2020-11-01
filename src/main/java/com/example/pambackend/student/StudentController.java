@@ -22,8 +22,8 @@ public class StudentController {
     }
 
     @PostMapping("/login")
-    public void loginUser(@RequestBody Student student){
-        studentService.findUser(student);
+    public boolean loginUser(@RequestBody Student student){
+        return studentService.findUser(student);
     }
 
     @GetMapping("/getAll")

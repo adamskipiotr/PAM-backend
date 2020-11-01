@@ -6,10 +6,12 @@ import com.example.pambackend.group.GroupRepository;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
+import com.example.pambackend.student.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -23,8 +25,9 @@ public class TeacherService {
         teacherRepository.save(user);
     }
 
-    public void findUser(Teacher user) {
-        teacherRepository.findUser(user.getUsername(),user.getPassword());
+    public boolean findTeacher(Teacher teacher) {
+        Optional<Teacher> foundTeacher = teacherRepository.findByNameAndPassword(teacher.getUsername(),teacher.getPassword());
+        return foundTeacher.isPresent();
     }
 
     public List<Teacher> getAllUsers() {
