@@ -18,7 +18,10 @@ public class StudentService {
     private final EntityManager entityManager;
     private final StudentRepository studentRepository;
 
-    public void addNewUser(Student student) {
+    public void addNewUser(StudentCreateDTO studentCreateDTO) {
+        Student student = new Student();
+        student.setUsername(studentCreateDTO.getUsername());
+        student.setPassword(studentCreateDTO.getPassword());
         studentRepository.save(student);
     }
 
@@ -41,6 +44,6 @@ public class StudentService {
     }
 
     public void findUser(Student student) {
-        // TODO Implement
+        studentRepository.findByNameAndPassword(student.getUsername(),student.getPassword());
     }
 }

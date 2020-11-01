@@ -10,4 +10,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("select s from Student s where s.studentID = :studentID")
     public Student findByID(@Param("studentID")Long studentID);
+
+    @Query("select s from Student s where s.username = :username and s.password = :password")
+    void findByNameAndPassword(@Param("username")String username,@Param("password") String password);
 }

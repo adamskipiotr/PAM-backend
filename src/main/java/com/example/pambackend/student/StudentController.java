@@ -17,8 +17,8 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/add")
-    public void addNewUser(@RequestBody Student student){
-        studentService.addNewUser(student);
+    public void addNewUser(@RequestBody StudentCreateDTO studentCreateDTO){
+        studentService.addNewUser(studentCreateDTO);
     }
 
     @PostMapping("/login")
