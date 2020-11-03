@@ -3,6 +3,7 @@ package com.example.pambackend.student;
 
 import com.example.pambackend.group.StudentsGroup;
 import com.example.pambackend.message.Message;
+import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,15 +31,15 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Message> getAllMessages(StudentDTO studentDTO) {
+    public List<MessageDTO> getAllMessages(StudentDTO studentDTO) {
         Student studentToHandle = studentRepository.findByID(studentDTO.getStudentID());
         List<StudentsGroup> assignedStudentsGroups = studentToHandle.getAssignedStudentsGroups();
-        List<Message> messagesForStudent = new LinkedList<>();
+        List<MessageDTO> messagesForStudent = new LinkedList<>();
         for (StudentsGroup assignedStudentsGroup : assignedStudentsGroups) {
-            String query = "SELECT m.contents FROM Message m WHERE m.messageid IN (SELECT x.messages_for_group_messageid FROM message_recipients_students_group x WHERE x.recipients_students_group_groupid = " + assignedStudentsGroup.getGroupID() + ")";
-            List<Object> res = entityManager.createNativeQuery(query).getResultList();
-            for (Object result : res) {
-                messagesForStudent.add(new Message(result.toString()));
+            String query = "SELECT * FROM Message m WHERE m.messageid IN (SELECT x.messages_for_group_messageid FROM message_recipients_students_group x WHERE x.recipients_students_group_groupid = " + assignedStudentsGroup.getGroupID() + ")";
+            List<Message> res = entityManager.createNativeQuery(query,Message.class).getResultList();
+            for (Message result : res) {
+                messagesForStudent.add(new MessageDTO(result.getTitle(),result.getContents(),result.getAuthor()));
             }
         }
         return messagesForStudent;

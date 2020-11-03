@@ -36,7 +36,7 @@ public class TeacherService {
 
     public void saveMessage(MessageDTO messageDTO) {
         StudentsGroup studentsGroupToInform = groupRepository.findById(messageDTO.getGroupID()).get();
-        Message newMessage = new Message(messageDTO.getContents(), studentsGroupToInform);
+        Message newMessage = new Message(messageDTO.getContents(),messageDTO.getTitle(),messageDTO.getAuthor(), studentsGroupToInform);
         messageRepository.save(newMessage);
     }
 }

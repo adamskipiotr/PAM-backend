@@ -2,6 +2,7 @@ package com.example.pambackend.student;
 
 
 import com.example.pambackend.message.Message;
+import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.user.PAMUser;
 import com.example.pambackend.user.UserService;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,5 @@ public class StudentController {
 
     @PostMapping("/getAllMessages")
     @ResponseBody
-    public List<Message> getAllMessages(@RequestBody StudentDTO student) { return studentService.getAllMessages(student);}
+    public List<MessageDTO> getAllMessages(@RequestBody StudentDTO student) { return studentService.getAllMessages(student);}
 }
