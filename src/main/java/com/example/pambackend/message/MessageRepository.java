@@ -14,4 +14,7 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
 
     @Query("SELECT m.contents FROM Message m WHERE m.recipientsStudentsGroup = :assignedGroup")
     List<String> getAllMessagesForGroup(@Param("assignedGroup")StudentsGroup  assignedGroup);
+
+    @Query("SELECT m FROM Message m WHERE m.title = :title")
+    Message findByTitle(@Param("title")String title);
 }

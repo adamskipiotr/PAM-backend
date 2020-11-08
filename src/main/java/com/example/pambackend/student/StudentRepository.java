@@ -15,4 +15,7 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("select s from Student s where s.username = :username and s.password = :password")
     Optional<Student> findByNameAndPassword(@Param("username")String username, @Param("password") String password);
+
+    @Query("select s from Student s where s.username = :studentName")
+    Student findByName(@Param("studentName")String studentName);
 }

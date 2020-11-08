@@ -2,6 +2,7 @@ package com.example.pambackend.student;
 
 
 import com.example.pambackend.group.StudentsGroup;
+import com.example.pambackend.message.Message;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -23,4 +24,8 @@ public class Student {
     @ManyToMany(mappedBy="studentsInGroup")
     @JsonIgnore
     private List<StudentsGroup> assignedStudentsGroups = new LinkedList<>();
+
+    @ManyToMany(mappedBy="studentsWhoSaw")
+    @JsonIgnore
+    private List<Message> messagesSeen = new LinkedList<>();
 }

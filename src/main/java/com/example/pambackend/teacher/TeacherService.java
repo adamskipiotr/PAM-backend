@@ -21,8 +21,11 @@ public class TeacherService {
     private final MessageRepository messageRepository;
     private final GroupRepository groupRepository;
 
-    public void addNewUser(Teacher user){
-        teacherRepository.save(user);
+    public void addNewUser(TeacherDTO teacherDTO){
+        Teacher newTeacher = new Teacher();
+        newTeacher.setUsername(teacherDTO.getUsername());
+        newTeacher.setPassword(teacherDTO.getPassword());
+        teacherRepository.save(newTeacher);
     }
 
     public boolean findTeacher(Teacher teacher) {

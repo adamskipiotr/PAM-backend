@@ -36,4 +36,11 @@ public class StudentController {
     @PostMapping("/getAllMessages")
     @ResponseBody
     public List<MessageDTO> getAllMessages(@RequestBody StudentDTO student) { return studentService.getAllMessages(student);}
+
+    @PostMapping("/markAsSeen/{studentName}")
+    public void markMessageAsSeen(@PathVariable("studentName")String studentName,@RequestBody MessageDTO messageDTO) { studentService.markMessageAsSeen(studentName,messageDTO);}
+
+    @PostMapping("/getUnreadMessagesCounter")
+    public Integer getUnreadMessagesCounter(@RequestBody StudentDTO studentDTO) {return  studentService.getUnreadMessagesCounter(studentDTO);}
+
 }

@@ -15,8 +15,8 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @PostMapping("/add")
-    public void addNewUser(@RequestBody Teacher user){
-        teacherService.addNewUser(user);
+    public void addNewUser(@RequestBody TeacherDTO teacherDTO){
+        teacherService.addNewUser(teacherDTO);
     }
 
     @PostMapping("/login")
