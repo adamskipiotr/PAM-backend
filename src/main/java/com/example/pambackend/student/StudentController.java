@@ -3,6 +3,7 @@ package com.example.pambackend.student;
 
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
+import com.example.pambackend.response.StudentLoginResponse;
 import com.example.pambackend.user.PAMUser;
 import com.example.pambackend.user.UserService;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @PostMapping("/login")
-    public boolean loginUser(@RequestBody Student student){
+    public StudentLoginResponse loginUser(@RequestBody Student student){
         return studentService.findUser(student);
     }
 

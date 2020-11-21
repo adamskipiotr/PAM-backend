@@ -5,6 +5,7 @@ import com.example.pambackend.group.StudentsGroup;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
+import com.example.pambackend.response.StudentLoginResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -56,9 +57,18 @@ public class StudentService {
         return messagesForStudent;
     }
 
-    public boolean findUser(Student student) {
+    public StudentLoginResponse findUser(Student student) {
+        StudentLoginResponse response = new StudentLoginResponse();
         Optional<Student> foundStudent = studentRepository.findByNameAndPassword(student.getUsername(), student.getPassword());
-        return foundStudent.isPresent();
+        if (foundStudent.isPresent()){
+            response.setResult(true);
+            response.setActiveStudent(foundStudent.get().dto());
+        }
+        else {
+            response.setResult(false);
+            response.setActiveStudent(null);
+        }
+        return response;
     }
 
     @Transactional

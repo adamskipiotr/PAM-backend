@@ -28,4 +28,8 @@ public class Student {
     @ManyToMany(mappedBy="studentsWhoSaw")
     @JsonIgnore
     private List<Message> messagesSeen = new LinkedList<>();
+
+    public StudentDTO dto(){
+        return new StudentDTO(studentID,username,password);
+    }
 }
