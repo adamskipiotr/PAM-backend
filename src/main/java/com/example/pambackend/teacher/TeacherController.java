@@ -2,6 +2,8 @@ package com.example.pambackend.teacher;
 
 
 import com.example.pambackend.message.MessageDTO;
+import com.example.pambackend.response.StudentLoginResponse;
+import com.example.pambackend.response.TeacherLoginResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +22,7 @@ public class TeacherController {
     }
 
     @PostMapping("/login")
-    public boolean loginTeacher(@RequestBody Teacher user){
+    public TeacherLoginResponse loginTeacher(@RequestBody Teacher user){
        return teacherService.findTeacher(user);
     }
 

@@ -1,7 +1,7 @@
 package com.example.pambackend.teacher;
 
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,4 +18,8 @@ public class Teacher {
 
     private String username;
     private String password;
+
+    public TeacherDTO dto(){
+        return new TeacherDTO(teacherID,username,password);
+    }
 }

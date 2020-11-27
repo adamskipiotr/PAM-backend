@@ -36,7 +36,7 @@ public class StudentService {
     }
 
     public List<MessageDTO> getAllMessages(StudentDTO studentDTO) {
-        Boolean messageSeen = false;
+        boolean messageSeen = false;
         Student studentToHandle = studentRepository.findByID(studentDTO.getStudentID());
         List<StudentsGroup> assignedStudentsGroups = studentToHandle.getAssignedStudentsGroups();
         List<MessageDTO> messagesForStudent = new LinkedList<>();

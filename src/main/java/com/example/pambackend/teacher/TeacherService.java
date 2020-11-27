@@ -6,6 +6,8 @@ import com.example.pambackend.group.GroupRepository;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
+import com.example.pambackend.response.StudentLoginResponse;
+import com.example.pambackend.response.TeacherLoginResponse;
 import com.example.pambackend.student.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,18 @@ public class TeacherService {
         teacherRepository.save(newTeacher);
     }
 
-    public boolean findTeacher(Teacher teacher) {
-        Optional<Teacher> foundTeacher = teacherRepository.findByNameAndPassword(teacher.getUsername(),teacher.getPassword());
-        return foundTeacher.isPresent();
+    public TeacherLoginResponse findTeacher(Teacher teacher) {
+        TeacherLoginResponse response = new TeacherLoginResponse();
+        Optional<Teacher> foundTeacher = teacherRepository.findByNameAndPassword(teacher.getUsername(), teacher.getPassword());
+        if (foundTeacher.isPresent()){
+            response.setResult(true);
+            response.setActiveTeacher(foundTeacher.get().dto());
+        }
+        else {
+            response.setResult(false);
+            response.setActiveTeacher(null);
+        }
+        return response;
     }
 
     public List<Teacher> getAllUsers() {
