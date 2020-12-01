@@ -21,4 +21,10 @@ public class GroupService {
         }
         return returnList;
     }
+
+    public void addNewGroup(String newStudentGroupName) {
+        StudentsGroup newGroup = new StudentsGroup();
+        newGroup.setGroupName(newStudentGroupName);
+        groupRepository.save(newGroup);
+    }
 }

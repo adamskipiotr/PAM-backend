@@ -2,10 +2,7 @@ package com.example.pambackend.group;
 
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,11 @@ public class GroupController {
     @ResponseBody
     public List<StudentsGroupDTO> getAllUsers(){
         return groupService.getAllGroups();
+    }
+
+    @PostMapping("/addNewGroup")
+    public void addNewGroup(@RequestBody String newStudentGroupName){
+        groupService.addNewGroup(newStudentGroupName);
     }
 }
 
