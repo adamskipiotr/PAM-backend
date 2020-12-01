@@ -9,4 +9,8 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
     private final MessageRepository messageRepository;
+
+    public void getMessageDetails(MessageDTO messageDTO) {
+        Message message = messageRepository.findByTitle(messageDTO.getTitle());
+    }
 }

@@ -12,4 +12,7 @@ public interface TeacherRepository extends JpaRepository<Teacher,Long> {
 
     @Query("select t from Teacher t where t.username = :username and t.password = :password")
     Optional<Teacher> findByNameAndPassword(String username, String password);
+
+    @Query("select t from Teacher t where t.teacherID = :teacherID")
+    Teacher findByID(@Param("teacherID")Long teacherID);
 }

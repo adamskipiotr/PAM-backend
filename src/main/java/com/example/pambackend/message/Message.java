@@ -2,6 +2,7 @@ package com.example.pambackend.message;
 
 
 import com.example.pambackend.group.StudentsGroup;
+import com.example.pambackend.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,10 @@ public class Message {
     @ManyToMany
     @JsonIgnore
     private List<StudentsGroup> recipientsStudentsGroup = new LinkedList<>();
+
+    @ManyToMany
+    @JsonIgnore
+    private List<Student> studentsWhoSaw = new LinkedList<>();
 
     public Message(String contents, String title, String author, StudentsGroup recipientsStudentsGroup) {
         this.contents = contents;

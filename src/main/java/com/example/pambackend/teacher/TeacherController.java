@@ -2,6 +2,10 @@ package com.example.pambackend.teacher;
 
 
 import com.example.pambackend.message.MessageDTO;
+import com.example.pambackend.message.MessageService;
+import com.example.pambackend.response.StudentLoginResponse;
+import com.example.pambackend.response.TeacherLoginResponse;
+import com.example.pambackend.student.StudentDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +17,15 @@ import java.util.List;
 public class TeacherController {
 
     private final TeacherService teacherService;
+    private final MessageService messageService;
 
     @PostMapping("/add")
-    public void addNewUser(@RequestBody Teacher user){
-        teacherService.addNewUser(user);
+    public void addNewUser(@RequestBody TeacherDTO teacherDTO){
+        teacherService.addNewUser(teacherDTO);
     }
 
     @PostMapping("/login")
-    public boolean loginTeacher(@RequestBody Teacher user){
+    public TeacherLoginResponse loginTeacher(@RequestBody Teacher user){
        return teacherService.findTeacher(user);
     }
 
@@ -32,4 +37,10 @@ public class TeacherController {
 
     @PostMapping("/sendMessage")
     public void sendMessage(@RequestBody MessageDTO message) { teacherService.saveMessage(message);}
+
+    @PostMapping("/getAllMessages")
+    public List<MessageDTO> getAllMessages(@RequestBody TeacherDTO teacherDTO) { return teacherService.getAllMessages(teacherDTO);}
+
+    @PostMapping("/getMessageDetails")
+    public void getMessageDetails(@RequestBody MessageDTO messageDTO) { messageService.getMessageDetails(messageDTO);}
 }
