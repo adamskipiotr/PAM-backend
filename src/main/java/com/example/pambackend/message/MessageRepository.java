@@ -17,4 +17,7 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
 
     @Query("SELECT m FROM Message m WHERE m.title = :title")
     Message findByTitle(@Param("title")String title);
+
+    @Query("SELECT m FROM Message m WHERE m.author = :author")
+    List<Message> findAllByAuthor(@Param("author")String author);
 }
