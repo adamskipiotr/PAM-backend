@@ -46,8 +46,8 @@ public class StudentService {
 
             for (Message result : res) {
                 messageSeen = false;
-                String checkQuety = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + result.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
-                List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+                String checkQuery = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + result.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
+                List<Object> checktResult = entityManager.createNativeQuery(checkQuery).getResultList();
                 if (checktResult.size() > 0) {
                     messageSeen = true;
                 }
@@ -75,8 +75,8 @@ public class StudentService {
     public void markMessageAsSeen(String studentName, MessageDTO messageDTO) {
         Student studentToHandle = studentRepository.findByName(studentName);
         Message messageToHandle = messageRepository.findByTitle(messageDTO.getTitle());
-        String checkQuety = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + messageToHandle.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
-        List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+        String checkQuery = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + messageToHandle.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
+        List<Object> checktResult = entityManager.createNativeQuery(checkQuery).getResultList();
         if (checktResult.size() > 0) {
             return;
         }

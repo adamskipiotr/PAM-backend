@@ -9,6 +9,7 @@ import com.example.pambackend.message.MessageRepository;
 import com.example.pambackend.response.StudentLoginResponse;
 import com.example.pambackend.response.TeacherLoginResponse;
 import com.example.pambackend.student.Student;
+import com.example.pambackend.student.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final MessageRepository messageRepository;
     private final GroupRepository groupRepository;
+    private final StudentRepository studentRepository;
     private final EntityManager entityManager;
 
     public void addNewUser(TeacherDTO teacherDTO){
@@ -62,7 +64,14 @@ public class TeacherService {
        List<MessageDTO> messageDTOList = new LinkedList<>();
        List<Message> teacherMessages = messageRepository.findAllByAuthor(teacherToHandle.getUsername());
        for(Message message:teacherMessages){
-           messageDTOList.add(new MessageDTO(message.getTitle(),message.getContents(),true,teacherToHandle.getUsername()));
+           String checkQuety = "SELECT m.students_who_saw_studentid FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + message.getMessageID();
+           List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+           List<String> recipients = new LinkedList<>();
+           for(Object id: checktResult){
+               Student singleRecipient = studentRepository.findByID(Long.valueOf(id.toString()));
+               recipients.add(singleRecipient.getUsername()+",");
+           }
+           messageDTOList.add(new MessageDTO(message.getTitle(),recipients.toString(),true,teacherToHandle.getUsername()));
        }
        return messageDTOList;
     }
