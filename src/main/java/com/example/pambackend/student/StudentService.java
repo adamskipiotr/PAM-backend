@@ -36,7 +36,7 @@ public class StudentService {
     }
 
     public List<MessageDTO> getAllMessages(StudentDTO studentDTO) {
-        boolean messageSeen = false;
+        boolean messageSeen;
         Student studentToHandle = studentRepository.findByID(studentDTO.getStudentID());
         List<StudentsGroup> assignedStudentsGroups = studentToHandle.getAssignedStudentsGroups();
         List<MessageDTO> messagesForStudent = new LinkedList<>();
@@ -46,8 +46,9 @@ public class StudentService {
 
             for (Message result : res) {
                 messageSeen = false;
-                String checkQuety = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + result.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
-                List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+                //TODO: SPRAWDZIC
+                String checkQuery = "SELECT * FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + result.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
+                List<Object> checktResult = entityManager.createNativeQuery(checkQuery).getResultList();
                 if (checktResult.size() > 0) {
                     messageSeen = true;
                 }
@@ -72,11 +73,12 @@ public class StudentService {
     }
 
     @Transactional
-    public void markMessageAsSeen(String studentName, MessageDTO messageDTO) {
-        Student studentToHandle = studentRepository.findByName(studentName);
+    public void markMessageAsSeen(Long id, MessageDTO messageDTO) {
+        Student studentToHandle = studentRepository.findByID(id);
         Message messageToHandle = messageRepository.findByTitle(messageDTO.getTitle());
-        String checkQuety = "SELECT FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + messageToHandle.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
-        List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+        //TODO: SPRAWDZIC
+        String checkQuery = "SELECT m.messages_seen_messageid FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + messageToHandle.getMessageID() + " AND m.students_who_saw_studentid = " + studentToHandle.getStudentID();
+        List<Object> checktResult = entityManager.createNativeQuery(checkQuery).getResultList();
         if (checktResult.size() > 0) {
             return;
         }
@@ -87,7 +89,12 @@ public class StudentService {
     public Integer getUnreadMessagesCounter(StudentDTO studentDTO) {
         Integer unreadMessagesCounter = 0;
         boolean countThisMessage;
-        Student studentRequesting = studentRepository.findByNameAndPassword(studentDTO.getUsername(), studentDTO.getPassword()).get();
+        Student studentRequesting;
+        if(studentRepository.findByNameAndPassword(studentDTO.getUsername(), studentDTO.getPassword()).isPresent())
+            studentRequesting = studentRepository.findByNameAndPassword(studentDTO.getUsername(), studentDTO.getPassword()).get();
+        else {
+            return 0;  //TODO Przerobic na throw Exception(?)
+        }
         List<StudentsGroup> assignedStudentsGroups = studentRequesting.getAssignedStudentsGroups();
 
         for (StudentsGroup assignedStudentsGroup : assignedStudentsGroups) {

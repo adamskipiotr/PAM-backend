@@ -6,9 +6,9 @@ import com.example.pambackend.group.GroupRepository;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
-import com.example.pambackend.response.StudentLoginResponse;
 import com.example.pambackend.response.TeacherLoginResponse;
 import com.example.pambackend.student.Student;
+import com.example.pambackend.student.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +24,7 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final MessageRepository messageRepository;
     private final GroupRepository groupRepository;
+    private final StudentRepository studentRepository;
     private final EntityManager entityManager;
 
     public void addNewUser(TeacherDTO teacherDTO){
@@ -52,7 +53,11 @@ public class TeacherService {
     }
 
     public void saveMessage(MessageDTO messageDTO) {
-        StudentsGroup studentsGroupToInform = groupRepository.findById(messageDTO.getGroupID()).get();
+        StudentsGroup studentsGroupToInform;
+        if(groupRepository.findById(messageDTO.getGroupID()).isPresent())
+            studentsGroupToInform = groupRepository.findById(messageDTO.getGroupID()).get();
+        else
+            return;
         Message newMessage = new Message(messageDTO.getContents(),messageDTO.getTitle(),messageDTO.getAuthor(), studentsGroupToInform);
         messageRepository.save(newMessage);
     }
@@ -62,7 +67,14 @@ public class TeacherService {
        List<MessageDTO> messageDTOList = new LinkedList<>();
        List<Message> teacherMessages = messageRepository.findAllByAuthor(teacherToHandle.getUsername());
        for(Message message:teacherMessages){
-           messageDTOList.add(new MessageDTO(message.getTitle(),message.getContents(),true,teacherToHandle.getUsername()));
+           String checkQuety = "SELECT m.students_who_saw_studentid FROM message_students_who_saw m WHERE m.messages_seen_messageid = " + message.getMessageID();
+           List<Object> checktResult = entityManager.createNativeQuery(checkQuety).getResultList();
+           List<String> recipients = new LinkedList<>();
+           for(Object id: checktResult){
+               Student singleRecipient = studentRepository.findByID(Long.valueOf(id.toString()));
+               recipients.add(singleRecipient.getUsername()+",");
+           }
+           messageDTOList.add(new MessageDTO(message.getTitle(),recipients.toString(),true,teacherToHandle.getUsername()));
        }
        return messageDTOList;
     }

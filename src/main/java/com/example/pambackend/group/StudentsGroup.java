@@ -4,7 +4,6 @@ package com.example.pambackend.group;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.student.Student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
