@@ -3,9 +3,7 @@ package com.example.pambackend.teacher;
 
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageService;
-import com.example.pambackend.response.StudentLoginResponse;
 import com.example.pambackend.response.TeacherLoginResponse;
-import com.example.pambackend.student.StudentDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

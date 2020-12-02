@@ -1,11 +1,8 @@
 package com.example.pambackend.student;
 
 
-import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.response.StudentLoginResponse;
-import com.example.pambackend.user.PAMUser;
-import com.example.pambackend.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +35,8 @@ public class StudentController {
     @ResponseBody
     public List<MessageDTO> getAllMessages(@RequestBody StudentDTO student) { return studentService.getAllMessages(student);}
 
-    @PostMapping("/markAsSeen/{studentName}")
-    public void markMessageAsSeen(@PathVariable("studentName")String studentName,@RequestBody MessageDTO messageDTO) { studentService.markMessageAsSeen(studentName,messageDTO);}
+    @PostMapping("/markAsSeen/{id}")
+    public void markMessageAsSeen(@PathVariable("id")Long id,@RequestBody MessageDTO messageDTO) { studentService.markMessageAsSeen(id,messageDTO);}
 
     @PostMapping("/getUnreadMessagesCounter")
     public Integer getUnreadMessagesCounter(@RequestBody StudentDTO studentDTO) {return  studentService.getUnreadMessagesCounter(studentDTO);}

@@ -6,7 +6,6 @@ import com.example.pambackend.group.GroupRepository;
 import com.example.pambackend.message.Message;
 import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageRepository;
-import com.example.pambackend.response.StudentLoginResponse;
 import com.example.pambackend.response.TeacherLoginResponse;
 import com.example.pambackend.student.Student;
 import com.example.pambackend.student.StudentRepository;
@@ -54,7 +53,11 @@ public class TeacherService {
     }
 
     public void saveMessage(MessageDTO messageDTO) {
-        StudentsGroup studentsGroupToInform = groupRepository.findById(messageDTO.getGroupID()).get();
+        StudentsGroup studentsGroupToInform;
+        if(groupRepository.findById(messageDTO.getGroupID()).isPresent())
+            studentsGroupToInform = groupRepository.findById(messageDTO.getGroupID()).get();
+        else
+            return;
         Message newMessage = new Message(messageDTO.getContents(),messageDTO.getTitle(),messageDTO.getAuthor(), studentsGroupToInform);
         messageRepository.save(newMessage);
     }
