@@ -31,16 +31,11 @@ public class Message {
     @JsonIgnore
     private List<Student> studentsWhoSaw = new LinkedList<>();
 
-    public Message(String contents, String title, String author, StudentsGroup recipientsStudentsGroup) {
-        this.contents = contents;
-        this.title = title;
-        this.author = author;
+    public Message(MessageDTO dto,StudentsGroup recipientsStudentsGroup) {
+        this.contents = dto.getContents();
+        this.title = dto.getTitle();
+        this.author = dto.getAuthor();
         this.recipientsStudentsGroup.add(recipientsStudentsGroup);
     }
 
-    public Message(String title, String contents, String author) {
-        this.contents = contents;
-        this.title = title;
-        this.author = author;
-    }
 }

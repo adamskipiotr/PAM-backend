@@ -1,7 +1,6 @@
 package com.example.pambackend.group;
 
 
-import com.example.pambackend.message.MessageDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

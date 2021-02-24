@@ -9,15 +9,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
 public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long teacherID;
 
+    @NonNull
     private String username;
+    @NonNull
     private String password;
+
+    public Teacher(TeacherDTO teacherDTO) {
+        username = teacherDTO.getUsername();
+        password = teacherDTO.getPassword();
+    }
 
     public TeacherDTO dto(){
         return new TeacherDTO(teacherID,username,password);

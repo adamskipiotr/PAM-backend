@@ -10,8 +10,8 @@ public class StudentsGroupDTO {
     @NonNull
     private String groupName;
 
-    public StudentsGroupDTO(Long groupID,String groupName){
-        this.groupID = groupID;
-        this.groupName = groupName;
+    public StudentsGroupDTO(StudentsGroup studentGroup) {
+        this.groupID = studentGroup.getGroupID();
+        this.groupName = studentGroup.getGroupName();
     }
 }

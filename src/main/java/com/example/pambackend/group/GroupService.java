@@ -6,8 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -18,11 +19,9 @@ public class GroupService {
 
     public List<StudentsGroupDTO> getAllGroups() {
         List<StudentsGroup> studentsGroups = groupRepository.findAll();
-        List<StudentsGroupDTO> returnList = new LinkedList<>();
-        for(StudentsGroup studentsGroup: studentsGroups){
-            returnList.add(new StudentsGroupDTO(studentsGroup.getGroupID(),studentsGroup.getGroupName()));
-        }
-        return returnList;
+        return studentsGroups.stream()
+                        .map(StudentsGroupDTO::new)
+                        .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void addNewGroup(String newStudentGroupName) {
