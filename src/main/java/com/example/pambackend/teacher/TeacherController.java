@@ -5,8 +5,10 @@ import com.example.pambackend.message.MessageDTO;
 import com.example.pambackend.message.MessageService;
 import com.example.pambackend.response.TeacherLoginResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,11 +17,11 @@ import java.util.List;
 public class TeacherController {
 
     private final TeacherService teacherService;
-    private final MessageService messageService;
 
     @PostMapping("/add")
-    public void addNewUser(@RequestBody TeacherDTO teacherDTO){
+    public ResponseEntity<String> addNewUser(@Valid @RequestBody TeacherDTO teacherDTO){
         teacherService.addNewUser(teacherDTO);
+        return ResponseEntity.ok("Teacher added to database");
     }
 
     @PostMapping("/login")
@@ -34,11 +36,10 @@ public class TeacherController {
     }
 
     @PostMapping("/sendMessage")
-    public void sendMessage(@RequestBody MessageDTO message) { teacherService.saveMessage(message);}
+    public ResponseEntity<String> sendMessage(@RequestBody MessageDTO message) {
+        teacherService.saveMessage(message);
+        return ResponseEntity.ok("Message saved in database");}
 
     @PostMapping("/getAllMessages")
-    public List<MessageDTO> getAllMessages(@RequestBody TeacherDTO teacherDTO) { return teacherService.getAllMessages(teacherDTO);}
-
-    @PostMapping("/getMessageDetails")
-    public void getMessageDetails(@RequestBody MessageDTO messageDTO) { messageService.getMessageDetails(messageDTO);}
+    public List<MessageDTO> getAllMessages(@Valid @RequestBody TeacherDTO teacherDTO) { return teacherService.getAllMessages(teacherDTO);}
 }
